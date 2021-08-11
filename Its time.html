@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>My experiment</title>
+        <script src="jspsych-6.3.1/jspsych.js"></script>
+        <script src="jspsych-6.3.1/plugins/jspsych-html-keyboard-response.js"></script>
+        <link href="jspsych-6.3.1/css/jspsych.css" rel="stylesheet" type="text/css">
+    </head>
+    <body></body>
+    <script>
+
+    var timeline = [];
+
+  var trial_1 = {
+      type: 'html-keyboard-response',
+      stimulus: 'Thank you for participating. You will be shown 8 items in a circle around a center point. Attempt to memorize the items as they appear. A short time later, you will determine whether or not a specific cued item was changed from the group. If the item was changed, you will determine which item appeared before the change. Press any key to continue.'
+  }
+  timeline.push(trial_1);w
+
+  var trial_2 = {
+      type: 'html-keyboard-response',
+      stimulus: 'Once you see the second appearance of the 8 items. Determine whether or not the cued item was changed. Use "F" for CHANGE. Use "J" for NO CHANGE. Press any key to continue'
+  }
+  timeline.push(trial_2);
+
+  var trial_3 = {
+      type: 'html-keyboard-response',
+      stimulus: 'If the trial that occured had a changed item, you will then be asked to determine which item appeared before the change out of four choices. Use the "1" "2" "3" and "4" keys to make your decision. Press any key to continue'
+  }
+  timeline.push(trial_3);
+
+    jsPsych.init({
+        timeline: timeline
+    });
+
+    </script>
+</html>
