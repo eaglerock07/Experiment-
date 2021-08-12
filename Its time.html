@@ -25,23 +25,33 @@
 
   var timeline_variables = [
     { v1: ['img/003.png', 'img/006.png', 'img/014.png', 'img/015.png', 'img/016.png', 'img/022.png','img/025.png','img/028.png','img/030.png','img/032.png', 'img/033.png','img/036.png', 'img/039.png']},
-  ];
- 
+
+];
+
   var node = {
     timeline_variables: timeline_variables,
     timeline: [
       {
     type: 'visual-search-circle',
-    target: jsPsych.timelineVariable('v1'),
+    target: 'img/003.png',
     foil: jsPsych.timelineVariable('v1'),
     fixation_image: 'img/red dot.png',
     set_size: 8,
     target_present: false
-  }
+  },
+  {
+      type: 'visual-search-circle',
+    target: 'img/003.png',
+    foil: jsPsych.timelineVariable('v1'),
+    fixation_image: 'img/red dot.png',
+    set_size: 8,
+    target_present: true
+}
     ],
     randomize_order: true,
-    repetitions: 4
-    };
+    repetitions: 4,
+    
+};
 
   jsPsych.init({
     timeline: [preload, node],
