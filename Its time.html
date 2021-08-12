@@ -3,72 +3,64 @@
 
 <head>
 
-  <script src="js/snap.svg-min.js"></script>
   <script src="../jspsych.js"></script>
+  <script src="../plugins/jspsych-image-keyboard-response.js"></script>
   <script src="../plugins/jspsych-html-keyboard-response.js"></script>
   <script src="../plugins/jspsych-visual-search-circle.js"></script>
   <script src="../plugins/jspsych-preload.js"></script>
   <link rel="stylesheet" href="../css/jspsych.css">
 </head>
-<body></body>
+
+<body>
+</body>
 <script>
 
-  var preload_images = {
+  // manually preload the image files, since they are passed to the image-keyboard-response stimulus parameter
+  // through timeline variables, and therefore cannot be automatically preloaded
+  var images = ['img/003.png', 'img/008.png', 'img/222.png'];
+  var preload = {
     type: 'preload',
-    images: ['img/003.png', 'img/2.gif', 'img/3.gif', 'img/backwardN.gif', 'img/normalN.gif', 'img/fixation.gif']
+    images: images
   }
 
-  var intro_1 = {
-    type: 'html-keyboard-response',
-    stimulus: 'Thank you for participating. You will be shown 8 items in a circle around a center point. Attempt to memorize the items as they appear. A short time later, you will determine whether or not a specific cued item was changed from the group. If the item was changed, you will determine which item appeared before the change. Press any key to continue.'
-  }
+  var timeline_variables = [
+    { v1: ['img/003.png', 'img/006.png', 'img/014.png', 'img/015.png', 'img/016.png', 'img/022.png','img/025.png','img/028.png','img/030.png','img/032.png', 'img/033.png','img/036.png', 'img/039.png']},
 
-  var intro_2 = {
-    type: 'html-keyboard-response',
-    stimulus: 'Once you see the second appearance of the 8 items. Determine whether or not the cued item was changed. Use "F" for CHANGE. Use "J" for NO CHANGE. Press any key to continue'
-  }
+];
 
-  var intro_3 = {
-    type: 'html-keyboard-response',
-    stimulus: 'If the trial that occured had a changed item, you will then be asked to determine which item appeared before the change out of four choices. Use the "1" "2" "3" and "4" keys to make your decision. Press any key to continue'
-  }
-
-  var trial_1 = {
-    target_present: true,
-    set_size: 8
-  }
-
-  var trial_2 = {
-    target_present: true,
-    set_size: 8
-  }
-
-  var trial_3 = {
-    target_present: false,
-    set_size: 8
-  }
-
-  var trial_4 = {
-    target_present: false,
-    foil: ['img/008.png', 'img/2.gif', 'img/3.gif'], // example of using multiple foils.
-    set_size: 8
-  }
-
-
-  var trials = {
+  var node = {
+    timeline_variables: timeline_variables,
+    timeline: [
+      {
     type: 'visual-search-circle',
     target: 'img/003.png',
-    foil: 'img/008.png',
+    foil: jsPsych.timelineVariable('v1'),
     fixation_image: 'img/red dot.png',
-    timeline: [trial_1, trial_2, trial_3, trial_4]
-  };
+    set_size: 8,
+    target_present: false
+  },
+  {
+      type: 'visual-search-circle',
+    target: 'img/003.png',
+    foil: jsPsych.timelineVariable('v1'),
+    fixation_image: 'img/red dot.png',
+    set_size: 8,
+    target_present: true
+}
+    ],
+    randomize_order: true,
+    repetitions: 4,
+    
+};
 
   jsPsych.init({
-    timeline: [preload_images, intro_1, intro_2, intro_3, trials],
+    timeline: [preload, node],
     on_finish: function() {
       jsPsych.data.displayData();
-    }
+    },
+    default_iti: 250
   });
+
 </script>
 
 </html>
