@@ -6,6 +6,7 @@
   <script src="js/snap.svg-min.js"></script>
   <script src="../jspsych.js"></script>
   <script src="../plugins/jspsych-html-keyboard-response.js"></script>
+  <script src="../plugins/jspsych-image-keyboard-response.js"></script>
   <script src="../plugins/jspsych-visual-search-circle.js"></script>
   <script src="../plugins/jspsych-preload.js"></script>
   <link rel="stylesheet" href="../css/jspsych.css">
@@ -31,6 +32,13 @@
   var intro_3 = {
     type: 'html-keyboard-response',
     stimulus: 'If the trial that occured had a changed item, you will then be asked to determine which item appeared before the change out of four choices. Use the "1" "2" "3" and "4" keys to make your decision. Press any key to continue'
+  }
+
+  var pre_trial = {
+      fixation_image: 'img/blue.png',
+      trial_duration: 1000,
+      choices: jsPsych.NO_KEYS
+
   }
 
   var trial_1 = {
@@ -60,7 +68,8 @@
     target: 'img/003.png',
     foil: 'img/008.png',
     fixation_image: 'img/red dot.png',
-    timeline: [trial_1, trial_2, trial_3, trial_4]
+    fixation_duration: 0,
+    timeline: [pre_trial, trial_1, pre_trial, trial_2, pre_trial, trial_3, pre_trial, trial_4]
   };
 
   jsPsych.init({
