@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -31,7 +32,7 @@
   var intro_3 = {
     type: 'html-keyboard-response',
     stimulus: 'If the trial that occured had a changed item, you will then be asked to determine which item appeared before the change out of four choices. Use the "1" "2" "3" and "4" keys to make your decision. Press any key to continue'
-  }
+  };
 
   var pre_trial = {
       fixation_image: 'img/blue.png',
@@ -47,33 +48,73 @@
 
   var trial_2 = {
     target_present: true,
-    set_size: 8
+    set_size: 8,
+    fixation_duration: 2000,
+    trial_duration: 2000
   }
 
-  var trial_3 = {
-    target_present: false,
-    set_size: 8
-  }
-
-  var trial_4 = {
-    target_present: false,
-    foil: ['img/008.png', 'img/2.gif', 'img/3.gif'], // example of using multiple foils.
-    set_size: 8
-  }
-
-
-  var trials = {
+ 
+  
+  var trials1 = {
     type: 'visual-search-circle',
     target: 'img/003.png',
     foil: 'img/008.png',
     fixation_image: 'img/red dot.png',
     fixation_duration: 0,
     trial_duration: 250,
-    timeline: [pre_trial, trial_1, pre_trial, trial_2, pre_trial, trial_3, pre_trial, trial_4]
-  };
+    timeline: [pre_trial, trial_1, trial_2,]
 
-  jsPsych.init({
-    timeline: [preload_images, intro_1, intro_2, intro_3, trials],
+  }
+    var trial_3 = {
+    target_present: true,
+    set_size: 8,
+   
+  }
+
+  var trial_4 = {
+    target_present: false,
+    foil: ['img/008.png', 'img/2.gif', 'img/3.gif'], // example of using multiple foils.
+    set_size: 8,
+    fixation_duration: 2000,
+    trial_duration: 2000
+  } 
+  var trials2 = {
+    type: 'visual-search-circle',
+    target: 'img/003.png',
+    foil: 'img/022.png',
+    fixation_image: 'img/red dot.png',
+    fixation_duration: 0,
+    trial_duration: 250,
+    timeline: [pre_trial, trial_3, trial_4]
+  }
+    var trial_5 = {
+    target_present: true,
+    set_size: 8
+  }
+
+  var trial_6 = {
+    target_present: true,
+    set_size: 8,
+    fixation_duration: 900,
+    trial_duration: 2000
+  }
+
+ 
+  
+  var trials3 = {
+    type: 'visual-search-circle',
+    target: 'img/003.png',
+    foil: 'img/008.png',
+    fixation_image: 'img/red dot.png',
+    fixation_duration: 0,
+    trial_duration: 250,
+    timeline: [pre_trial, trial_5, trial_6,]
+  } 
+  ;
+
+ 
+jsPsych.init({
+    timeline: [preload_images, intro_1, intro_2, intro_3, trials1, trials2, trials3],
     on_finish: function() {
       jsPsych.data.displayData();
     }
