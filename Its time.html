@@ -14,6 +14,7 @@
 <body></body>
 <script>
 
+
   var preload_images = {
     type: 'preload',
     images: ['img/003.png', 'img/2.gif', 'img/3.gif', 'img/backwardN.gif', 'img/normalN.gif', 'img/fixation.gif']
@@ -69,7 +70,6 @@
     fixation_duration: 0,
     trial_duration: 250,
     timeline: [pre_trial, trial_1, trial_2,]
-
   }
     var trial_3 = {
     target_present: true,
@@ -116,12 +116,16 @@
     trial_duration: 250,
     timeline: [pre_trial, trial_5, trial_6,],
     
-  };
+  }
+var myArray = [trials1, trials2, trials3 ];
+var shuffledArray = jsPsych.randomization.repeat(myArray, 3);
+
   var trials = {
-      timeline:[trials3, trials1, trials2],
-      repetitions: 3
-   };
- 
+    timeline:shuffledArray
+
+    }
+
+    
 jsPsych.init({
     timeline: [preload_images, intro_1, intro_2, intro_3, trials],
     on_finish: function() {
