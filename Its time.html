@@ -66,36 +66,9 @@
   }
   var yo = ['img/003.png', 'img/006.png', 'img/014.png', 'img/015.png', 'img/022.png','img/028.png','img/030.png', 'img/033.png','img/036.png', 'img/039.png','img/040.png','img/041.png','img/047.png', 'img/048.png', 'img/054.png', 'img/055.png', 'img/060.png','img/061.png','img/063.png', 'img/067.png','img/069.png', 'img/074.png','img/078.png','img/084.png']
   var yoyo = jsPsych.randomization.repeat(yo, 1);
+  var yoyo2 =  jsPsych.randomization.repeat(yoyo, 1);
   var pics = [
-    {v1: jsPsych.randomization.repeat(yo, 1)},
-    {v1: jsPsych.randomization.repeat(yo, 1)},
-    {v1: jsPsych.randomization.repeat(yo, 1)},
-    {v1: jsPsych.randomization.repeat(yo, 1)},
-    {v1: jsPsych.randomization.repeat(yo, 1)},
-    {v1: jsPsych.randomization.repeat(yo, 1)},
-    {v1: jsPsych.randomization.repeat(yo, 1)},
-    {v1: jsPsych.randomization.repeat(yo, 1)},
-    {v1: jsPsych.randomization.repeat(yo, 1)},
-    {v1: jsPsych.randomization.repeat(yo, 1)},
-    {v1: jsPsych.randomization.repeat(yo, 1)},
-    {v1: jsPsych.randomization.repeat(yo, 1)},
-    {v1: jsPsych.randomization.repeat(yo, 1)},
-    {v1: jsPsych.randomization.repeat(yo, 1)},
-    {v1: jsPsych.randomization.repeat(yo, 1)},
-    {v1: jsPsych.randomization.repeat(yo, 1)},
-    {v1: jsPsych.randomization.repeat(yo, 1)},
-    {v1: jsPsych.randomization.repeat(yo, 1)},
-    {v1: jsPsych.randomization.repeat(yo, 1)},
-    {v1: jsPsych.randomization.repeat(yo, 1)},
-    {v1: jsPsych.randomization.repeat(yo, 1)},
-    {v1: jsPsych.randomization.repeat(yo, 1)},
-    {v1: jsPsych.randomization.repeat(yo, 1)},
-    {v1: jsPsych.randomization.repeat(yo, 1)},
-    {v1: jsPsych.randomization.repeat(yo, 1)},
-    {v1: jsPsych.randomization.repeat(yo, 1)},
-  
-    
-
+    {v1: yoyo},
 ];
 
   var trial_1 = {
@@ -135,8 +108,9 @@
   var trials1 = {
     timeline_variables: pics,
     type: 'visual-search-circle',
-    target: jsPsych.timelineVariable('v1'),
-    foil: jsPsych.timelineVariable('v1'),
+    target: jsPsych.randomization.sampleWithoutReplacement(yoyo, 1),
+    foil: jsPsych.randomization.sampleWithoutReplacement(yoyo, 8),
+    randomize_order: true,
     fixation_image: 'img/red dot.png',
     fixation_duration: 0,
     timeline: [pre_trial, trial_1, trial_2, display1],
@@ -181,8 +155,9 @@
   var trials2 = {
     timeline_variables: pics,
     type: 'visual-search-circle',
-    target:jsPsych.timelineVariable('v1'),
-    foil: jsPsych.timelineVariable('v1'),
+    target: jsPsych.randomization.sampleWithoutReplacement(yoyo, 1),
+    foil: jsPsych.randomization.sampleWithoutReplacement(yoyo, 8),
+    randomize_order: true,
     fixation_image: 'img/red dot.png',
     fixation_duration: 0,
     timeline: [pre_trial, trial_3, trial_4, display2]
@@ -226,8 +201,9 @@
   var trials3 = {
     timeline_variables: pics,
     type: 'visual-search-circle',
-    target: jsPsych.timelineVariable('v1'),
-    foil: jsPsych.timelineVariable('v1'),
+    target:jsPsych.randomization.sampleWithoutReplacement(yoyo, 1),
+    foil:jsPsych.randomization.sampleWithoutReplacement(yoyo, 8),
+    randomize_order: true,
     fixation_image: 'img/red dot.png',
     fixation_duration: 0,
     timeline: [pre_trial, trial_5, trial_6, display3],
@@ -256,8 +232,9 @@
   var trials4 = {
     timeline_variables: pics,
     type: 'visual-search-circle',
-    target:jsPsych.timelineVariable('v1'),
-    foil: jsPsych.timelineVariable('v1'),
+    target: jsPsych.randomization.sampleWithoutReplacement(yoyo, 1),
+    foil: jsPsych.randomization.sampleWithoutReplacement(yoyo, 8),
+    randomize_order: true,
     fixation_image: 'img/red dot.png',
     fixation_duration: 0,
     timeline: [pre_trial, trial_7, trial_8],
@@ -286,8 +263,9 @@
   var trials5 = {
     timeline_variables: pics,
     type: 'visual-search-circle',
-    target:jsPsych.timelineVariable('v1'),
-    foil: jsPsych.timelineVariable('v1'),
+    target:jsPsych.randomization.sampleWithoutReplacement(yoyo, 1),
+    foil: jsPsych.randomization.sampleWithoutReplacement(yoyo, 8),
+    randomize_order: true,
     fixation_image: 'img/red dot.png',
     fixation_duration: 0,
     timeline: [pre_trial, trial_9, trial_10]
@@ -315,8 +293,9 @@
   var trials6 = {
     timeline_variables: pics,
     type: 'visual-search-circle',
-    target:jsPsych.timelineVariable('v1'),
-    foil: jsPsych.timelineVariable('v1'),
+    target: jsPsych.randomization.sampleWithoutReplacement(yoyo, 1),
+    foil:jsPsych.randomization.sampleWithoutReplacement(yoyo, 8),
+    randomize_order: true,
     fixation_image: 'img/red dot.png',
     fixation_duration: 0,
     timeline: [pre_trial, trial_11, trial_12],
