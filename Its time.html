@@ -2,7 +2,8 @@
 <html>
 
 <head>
-  <title>My experiment</title>
+
+  <script src="js/snap.svg-min.js"></script>
   <script src="../jspsych.js"></script>
   <style>
     * {
@@ -24,17 +25,68 @@
     </style>
   <script src="../plugins/jspsych-html-keyboard-response.js"></script>
   <script src="../plugins/jspsych-image-keyboard-response.js"></script>
+  <script src="../plugins/jspsych-visual-search-circle.js"></script>
   <script src="../plugins/jspsych-preload.js"></script>
   <link rel="stylesheet" href="../css/jspsych.css">
 </head>
-
 <body></body>
 <script>
-  /* create timeline */
-  var timeline = [];
 
-  /* define instructions trial */
-  var instructions = {
+
+  var preload_images = {
+    type: 'preload',
+    images: ['img/003.png', 'img/006.png', 'img/014.png', 'img/015.png', 'img/022.png','img/028.png','img/030.png', 'img/033.png','img/036.png', 'img/039.png','img/040.png','img/041.png','img/047.png', 'img/048.png', 'img/054.png', 'img/055.png', 'img/060.png','img/061.png','img/063.png', 'img/067.png','img/069.png', 'img/074.png','img/078.png','img/084.png']
+  }
+
+
+  var intro_1 = {
+    type: 'html-keyboard-response',
+    stimulus: 'Thank you for participating. You will be shown 8 items in a circle around a center point. Attempt to memorize the items as they appear. A short time later, you will determine whether or not a specific cued item was changed from the group. If the item was changed, you will determine which item appeared before the change. Press any key to continue.'
+  }
+
+  var intro_2 = {
+    type: 'html-keyboard-response',
+    stimulus: 'Once you see the second appearance of the 8 items. Determine whether or not the cued item was changed. Use "F" for CHANGE. Use "J" for NO CHANGE. Press any key to continue'
+  }
+
+  var intro_3 = {
+    type: 'html-keyboard-response',
+    stimulus: 'If the trial that occured had a changed item, you will then be asked to determine which item appeared before the change out of four choices. Use the "1" "2" "3" and "4" keys to make your decision. Press any key to continue'
+  }
+ 
+  
+  jsPsych.init({
+    timeline: [preload_images, intro_1, intro_2, intro_3],
+
+  });
+  var pre_trial = {
+      fixation_image: 'img/blue.png',
+      trial_duration: 1000,
+      choices: jsPsych.NO_KEYS    
+  }
+  var yo = ['img/003.png', 'img/006.png', 'img/014.png', 'img/015.png', 'img/022.png','img/028.png','img/030.png', 'img/033.png','img/036.png', 'img/039.png','img/040.png','img/041.png','img/047.png', 'img/048.png', 'img/054.png', 'img/055.png', 'img/060.png','img/061.png','img/063.png', 'img/067.png','img/069.png', 'img/074.png','img/078.png','img/084.png']
+  var yoyo = jsPsych.randomization.repeat(yo, 1);
+  var pics = [
+    {v1: yoyo}
+
+];
+
+  var trial_1 = {
+    timeline_variables: pics,
+    target_present: true,
+    trial_duration: 250,
+    set_size: 8,
+    choices: jsPsych.NO_KEYS
+  }
+
+  var trial_2 = {
+    timeline_variables: pics,
+    target_present: false,
+    set_size: 8,
+    fixation_duration: 2000,
+    trial_duration: 2000
+  }
+  var display1 = {
     type: "html-keyboard-response",
     stimulus: `
       <div class="row">
@@ -48,15 +100,204 @@
       <p class='small'><strong>4</strong></p></div>
      
     `,
-    post_trial_gap: 2000
-  };
-  timeline.push(instructions);
+    choices: ['1','2','3','4'],
+  }
+
+  var trials1 = {
+    timeline_variables: pics,
+    type: 'visual-search-circle',
+    target: 'img/016.png',
+    foil: jsPsych.timelineVariable('v1'),
+    fixation_image: 'img/red dot.png',
+    fixation_duration: 0,
+    timeline: [pre_trial, trial_1, trial_2, display1],
+  }
+
+    var trial_3 = {
+        timeline_variables: pics,
+        choices: jsPsych.NO_KEYS,
+    trial_duration: 250,
+    target_present: true,
+    set_size: 8,
+   
+  }
+
+  var trial_4 = {
+    timeline_variables: pics,
+    target_present: false,
+    set_size: 8,
+    fixation_duration: 2000,
+    trial_duration: 2000
+  } 
+
+  var display2 = {
+    type: "html-keyboard-response",
+    stimulus: `
+      <div class="row">
+      <div class='column'><img src='img/blue.png', style="width:100%"></img>
+      <p class='small'><strong>1</strong></p></div>
+      <div class="column": right;'><img src='img/blue.png', style="width:100%"></img>
+      <p class='small'><strong>2</strong></p></div>
+      <div class="column"><img src='img/blue.png', style="width:100%"></img>
+      <p class='small'><strong>3</strong></p></div>
+      <div class= "column"><img src='img/blue.png', style="width:100%"></img>
+      <p class='small'><strong>4</strong></p></div>
+     
+    `,
+    choices: ['1','2','3','4'],
+  }
+
+  var trials2 = {
+    timeline_variables: pics,
+    type: 'visual-search-circle',
+    target: 'img/025.png',
+    foil: jsPsych.timelineVariable('v1'),
+    fixation_image: 'img/red dot.png',
+    fixation_duration: 0,
+    timeline: [pre_trial, trial_3, trial_4, display2]
+  }
+    var trial_5 = {
+    timeline_variables: pics,
+    choices: jsPsych.NO_KEYS,
+    trial_duration: 250,
+    target_present: true,
+    set_size: 8
+  }
+
+  var trial_6 = {
+    timeline_variables: pics,
+    target_present: false,
+    set_size: 8,
+    fixation_duration: 900,
+    trial_duration: 2000
+  }
+
+  var display3 = {
+    type: "html-keyboard-response",
+    stimulus: `
+      <div class="row">
+      <div class='column'><img src='img/blue.png', style="width:100%"></img>
+      <p class='small'><strong>1</strong></p></div>
+      <div class="column": right;'><img src='img/blue.png', style="width:100%"></img>
+      <p class='small'><strong>2</strong></p></div>
+      <div class="column"><img src='img/blue.png', style="width:100%"></img>
+      <p class='small'><strong>3</strong></p></div>
+      <div class= "column"><img src='img/blue.png', style="width:100%"></img>
+      <p class='small'><strong>4</strong></p></div>
+     
+    `,
+    choices: ['1','2','3','4'],
+  }
 
   
+  var trials3 = {
+    timeline_variables: pics,
+    type: 'visual-search-circle',
+    target: 'img/032.png',
+    foil: jsPsych.timelineVariable('v1'),
+    fixation_image: 'img/red dot.png',
+    fixation_duration: 0,
+    timeline: [pre_trial, trial_5, trial_6, display3],
+    
+  }
 
-  /* start the experiment */
-  jsPsych.init({
-    timeline: timeline
+  var trial_7 = {
+    timeline_variables: pics,
+    target_present: true,
+    trial_duration: 250,
+    set_size: 8,
+    choices: jsPsych.NO_KEYS
+  }
+
+  var trial_8 = {
+    timeline_variables: pics,
+    target_present: true,
+    set_size: 8,
+    fixation_duration: 2000,
+    trial_duration: 2000
+  }
+  
+
+  var trials4 = {
+    timeline_variables: pics,
+    type: 'visual-search-circle',
+    target: 'img/016.png',
+    foil: jsPsych.timelineVariable('v1'),
+    fixation_image: 'img/red dot.png',
+    fixation_duration: 0,
+    timeline: [pre_trial, trial_7, trial_8],
+  }
+
+    var trial_9 = {
+        timeline_variables: pics,
+        choices: jsPsych.NO_KEYS,
+    trial_duration: 250,
+    target_present: true,
+    set_size: 8,
+   
+  }
+
+  var trial_10 = {
+    timeline_variables: pics,
+    target_present: true,
+    set_size: 8,
+    fixation_duration: 2000,
+    trial_duration: 2000
+  } 
+
+
+  var trials5 = {
+    timeline_variables: pics,
+    type: 'visual-search-circle',
+    target: 'img/025.png',
+    foil: jsPsych.timelineVariable('v1'),
+    fixation_image: 'img/red dot.png',
+    fixation_duration: 0,
+    timeline: [pre_trial, trial_9, trial_10]
+  }
+    var trial_11 = {
+    timeline_variables: pics,
+    choices: jsPsych.NO_KEYS,
+    trial_duration: 250,
+    target_present: true,
+    set_size: 8
+  }
+
+  var trial_12 = {
+    timeline_variables: pics,
+    target_present: true,
+    set_size: 8,
+    fixation_duration: 900,
+    trial_duration: 2000
+  }
+
+
+  
+  var trials6 = {
+    timeline_variables: pics,
+    type: 'visual-search-circle',
+    target: 'img/032.png',
+    foil: jsPsych.timelineVariable('v1'),
+    fixation_image: 'img/red dot.png',
+    fixation_duration: 0,
+    timeline: [pre_trial, trial_11, trial_12],
+    
+  }
+
+var myArray = [trials1, trials2, trials3, trials4, trials5, trials6];
+var shuffledArray = jsPsych.randomization.repeat(myArray, 3);
+
+  var trials = {
+    timeline:shuffledArray
+
+    }
+
+    
+jsPsych.init({
+    timeline: [preload_images, intro_1, intro_2, intro_3, trials],
+    on_finish: function() {
+      jsPsych.data.displayData();
+    }
   });
 </script>
 
