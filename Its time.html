@@ -23,7 +23,13 @@
       display: table;
     }
     </style>
+    <style>
+      .gray {
+        filter: grayscale(100%);
+      }
+      </style>
   <script src="../plugins/jspsych-html-keyboard-response.js"></script>
+  <script src="../plugins/jspsych-audio-keyboard-response.js"></script>
   <script src="../plugins/jspsych-image-keyboard-response.js"></script>
   <script src="../plugins/jspsych-visual-search-circle.js"></script>
   <script src="../plugins/jspsych-preload.js"></script>
@@ -37,7 +43,6 @@
     type: 'preload',
     images: ['img/003.png', 'img/006.png', 'img/014.png', 'img/015.png', 'img/022.png','img/028.png','img/030.png', 'img/033.png','img/036.png', 'img/039.png','img/040.png','img/041.png','img/047.png', 'img/048.png', 'img/054.png', 'img/055.png', 'img/060.png','img/061.png','img/063.png', 'img/067.png','img/069.png', 'img/074.png','img/078.png','img/084.png']
   }
-
 
   var intro_1 = {
     type: 'html-keyboard-response',
@@ -71,6 +76,8 @@
     {v1: yoyo},
 ];
 
+
+
   var trial_1 = {
     timeline_variables: pics,
     target_present: true,
@@ -103,6 +110,25 @@
      
     `,
     choices: ['1','2','3','4'],
+    correct_response: '4'
+  }
+
+var noise = {
+    type: "audio-keyboard-response",
+    stimulus: 'sound/speech_green.mp3',
+    trial_duration: 250
+}
+
+  var if_noise = {
+    timeline: [noise],
+    conditional_function: function(){
+      var data = jsPsych.data.get().last(1).values()[0];
+      if(jsPsych.pluginAPI.compareKeys(data.response, '4')){
+        return true;
+      } else {
+        return false;
+      }
+    }
   }
 
   var trials1 = {
@@ -113,7 +139,7 @@
     randomize_order: true,
     fixation_image: 'img/red dot.png',
     fixation_duration: 0,
-    timeline: [pre_trial, trial_1, trial_2, display1],
+    timeline: [pre_trial, trial_1, trial_2, display1, if_noise],
   }
 
     var trial_3 = {
@@ -150,6 +176,25 @@
      
     `,
     choices: ['1','2','3','4'],
+    correct_response: '4'
+  }
+
+  var noise2 = {
+    type: "audio-keyboard-response",
+    stimulus: 'sound/speech_green.mp3',
+    trial_duration: 250
+}
+
+  var if_noise2 = {
+    timeline: [noise2],
+    conditional_function: function(){
+      var data = jsPsych.data.get().last(1).values()[0];
+      if(jsPsych.pluginAPI.compareKeys(data.response, '4')){
+        return true;
+      } else {
+        return false;
+      }
+    }
   }
 
   var trials2 = {
@@ -160,7 +205,7 @@
     randomize_order: true,
     fixation_image: 'img/red dot.png',
     fixation_duration: 0,
-    timeline: [pre_trial, trial_3, trial_4, display2]
+    timeline: [pre_trial, trial_3, trial_4, display2, if_noise2]
   }
     var trial_5 = {
     timeline_variables: pics,
@@ -195,9 +240,27 @@
      
     `,
     choices: ['1','2','3','4'],
+    correct_response: '4'
   }
 
-  
+  var noise3 = {
+    type: "audio-keyboard-response",
+    stimulus: 'sound/speech_green.mp3',
+    trial_duration: 250
+}
+
+  var if_noise3 = {
+    timeline: [noise],
+    conditional_function: function(){
+      var data = jsPsych.data.get().last(1).values()[0];
+      if(jsPsych.pluginAPI.compareKeys(data.response, '4')){
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
+
   var trials3 = {
     timeline_variables: pics,
     type: 'visual-search-circle',
@@ -206,7 +269,7 @@
     randomize_order: true,
     fixation_image: 'img/red dot.png',
     fixation_duration: 0,
-    timeline: [pre_trial, trial_5, trial_6, display3],
+    timeline: [pre_trial, trial_5, trial_6, display3, if_noise3],
     
   }
 
@@ -232,8 +295,8 @@
   var trials4 = {
     timeline_variables: pics,
     type: 'visual-search-circle',
-    target: jsPsych.randomization.sampleWithoutReplacement(yoyo, 1),
-    foil: jsPsych.randomization.sampleWithoutReplacement(yoyo, 8),
+    target: jsPsych.randomization.sampleWithoutReplacement(yoyo, 1), 
+    foil: jsPsych.randomization.sampleWithoutReplacement(yoyo, 8),   
     randomize_order: true,
     fixation_image: 'img/red dot.png',
     fixation_duration: 0,
@@ -263,8 +326,8 @@
   var trials5 = {
     timeline_variables: pics,
     type: 'visual-search-circle',
-    target:jsPsych.randomization.sampleWithoutReplacement(yoyo, 1),
-    foil: jsPsych.randomization.sampleWithoutReplacement(yoyo, 8),
+    target:jsPsych.randomization.sampleWithoutReplacement(yoyo, 1), 
+    foil: jsPsych.randomization.sampleWithoutReplacement(yoyo, 8),  
     randomize_order: true,
     fixation_image: 'img/red dot.png',
     fixation_duration: 0,
@@ -294,7 +357,7 @@
     timeline_variables: pics,
     type: 'visual-search-circle',
     target: jsPsych.randomization.sampleWithoutReplacement(yoyo, 1),
-    foil:jsPsych.randomization.sampleWithoutReplacement(yoyo, 8),
+    foil:jsPsych.randomization.sampleWithoutReplacement(yoyo, 8),    
     randomize_order: true,
     fixation_image: 'img/red dot.png',
     fixation_duration: 0,
@@ -320,4 +383,5 @@ jsPsych.init({
 </script>
 
 </html>
+
 
