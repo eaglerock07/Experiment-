@@ -6,8 +6,9 @@
   <script src="js/snap.svg-min.js"></script>
   <script src="../jspsych.js"></script>
   <style>
+    /*These styles are used to create the identifcation display*/
     * {
-      box-sizing: border-box;
+      box-sizing: border-box; 
     }
     
     .column {
@@ -30,52 +31,145 @@
   <script src="../plugins/jspsych-audio-keyboard-response.js"></script>
   <script src="../plugins/jspsych-image-keyboard-response.js"></script>
   <script src="../plugins/jspsych-visual-search-circle.js"></script>
+  <script src="../plugins/jspsych-html-slider-response.js"></script>
+  <script src="../plugins/jspsych-survey-multi-choice.js"></script>
+  <script src="../plugins/jspsych-survey-text.js"></script>
   <script src="../plugins/jspsych-preload.js"></script>
   <link rel="stylesheet" href="../css/jspsych.css">
 </head>
 <body></body>
 <script>
 
-
+///Needed so that the images are in full resolution the first time they are shown.
   var preload_images = {
     type: 'preload',
     images: ['img/003.png', 'img/006.png', 'img/014.png', 'img/015.png', 'img/022.png','img/028.png','img/030.png', 'img/033.png','img/036.png', 'img/039.png','img/040.png','img/041.png','img/047.png', 'img/048.png', 'img/054.png', 'img/055.png', 'img/060.png','img/061.png','img/063.png', 'img/067.png','img/069.png', 'img/074.png','img/078.png','gimg/084.png','gimg/003.png', 'gimg/006.png', 'gimg/014.png', 'gimg/015.png', 'gimg/022.png','gimg/028.png','gimg/030.png', 'gimg/033.png','gimg/036.png', 'gimg/039.png','gimg/040.png','gimg/041.png','gimg/047.png', 'gimg/048.png', 'gimg/054.png', 'gimg/055.png', 'gimg/060.png','gimg/061.png','gimg/063.png', 'gimg/067.png','gimg/069.png', 'gimg/074.png','gimg/078.png','gimg/084.png']
   }
 
 
-
+///All introductions
   var intro_1 = {
     type: 'html-keyboard-response',
-    stimulus: 'Thank you for participating. You will be shown 8 items in a circle around a center point. Attempt to memorize the items as they appear. A short time later, you will determine whether or not a specific cued item was changed from the group. If the item was changed, you will determine which item appeared before the change. Press any key to continue.'
+    stimulus: 'Welcome to the experiment! Press any button when you are ready to begin.'
   }
 
   var intro_2 = {
     type: 'html-keyboard-response',
-    stimulus: 'Once you see the second appearance of the 8 items. Determine whether or not the cued item was changed. Use "F" for CHANGE. Use "J" for NO CHANGE. Press any key to continue'
+    stimulus: 'First, we are going to ask you two brief questions about your age and gender. Press space bar to continue'
   }
 
-  var intro_3 = {
-    type: 'html-keyboard-response',
-    stimulus: 'If the trial that occured had a changed item, you will then be asked to determine which item appeared before the change out of four choices. Use the "1" "2" "3" and "4" keys to make your decision. Press any key to continue'
-  }
  
+  var gender = {
+      type: 'survey-multi-choice',
+      questions: [
+        {
+      prompt: "Which gender best describes you?", 
+      options: ['Male', 'Female'], 
+      required: true,
+      button_label: 'Continue'
+        }
+    ]
+    }
   
+
+    var age = {
+  type: 'survey-text',
+  questions: [
+    {prompt: 'How old are you?'}
+  ]
+}
+
+  var intro_5 = {
+    type: 'html-keyboard-response',
+    stimulus: 'This experiment will try to assess how effectively you can do two things. 1. Direct your attention to locations. 2. Report things you have seen. Press space bar to continue.'
+  }
+
+  var intro_6 = {
+    type: 'html-keyboard-response',
+    stimulus: 'Each trial in the experiment follows a simple procedure. We will now show you how it will work. Ready? Press the space bar to proceed.'
+  }
+
+  var intro_7 = {
+    type: 'html-keyboard-response',
+    stimulus: 'At the start of each trial, a blue dot will appear. Whenever the blue dot is on the screen, make sure you look at the dot! Press the space bar to see what the blue dot looks like.'
+  }
+
+  var intro_dot = {
+    type: 'visual-search-circle',
+      fixation_image: 'img/blue.png',
+      trial_duration: 1000,
+      choices: jsPsych.NO_KEYS    
+  }
+
+
+  var intro_dot2 = {
+    type: 'visual-search-circle',
+      fixation_image: 'img/red dot.png',
+      trial_duration: 1000,
+      choices: jsPsych.NO_KEYS    
+  }
+
+  
+///put pre-trial in between these
+
+var intro_8 = {
+    type: 'html-keyboard-response',
+    stimulus: 'Whenever a trial is about to start, the red dot changes to a green dot. Press the space bar to see what this looks like. '
+  }
+
+///red and blue dots 
+
+var intro_9 = {
+    type: 'html-keyboard-response',
+    stimulus: 'Make sure to always looks at the red or green dots whenever they are on the screen! After the dot turns green, images will appear on the screen. Your goal is to try to pay attention to all eight images at once, and remember as many images as possible! We know this is difficult, but simply try to do the best you can! Press space bar.'
+  }
+
+  var intro_10 = {
+    type: 'html-keyboard-response',
+    stimulus: 'Keep in mind that when the images are presented, it will be tempting to try to look directly at them, but we want you to keep looking at the dot the entire time! We are now going to load all of the images, and show them briefly on the screen. Do not worry if the presentation lags. After they load, they will present cleanly and quickly! Press space bar.'
+  }
+
+  var intro_11 = {
+    type: 'html-keyboard-response',
+    stimulus: 'In the real experiment, the images will be shown much more briefly than that example. When the images are shown, you need to stay looking at the red dot, but please pay attention to all 8 images at once! We know it is hard because they are in your visual periphery but try your best! Shortly after the images disappear, a line will be presented, which labels which location youll be asked about later on. Press space bar to continue. '
+  }
+
+  var intro_12 = {
+    type: 'html-keyboard-response',
+    stimulus: 'After the line disappears, images will be presented a second time in a circle, and you will be asked one or two questions. One question you will be asked on every trial is whether the image at the location of the line stayed the SAME, or CHANGED from the 1st to the 2nd presentation. Press space bar to try a few practive trials that focus on this question.'
+  }
+
+  ////Trial runs 
+
+  var intro_13 = {
+    type: 'html-keyboard-response',
+    stimulus: 'For the image the line pointed to, is it the SAME, or is it DIFFERENT from the first presentation at that location? Press Q if you think it stayed the SAME. Press P if you think it is DIFFERENT.'
+  }
+
+  var intro_14 = {
+    type: 'html-keyboard-response',
+    stimulus: 'Now lets get you started on a practice block to get you ready for the real experiment. In this practice block, there are two things to note: (1)Always keep your eyes on the dot when it is on the screen! We know its tempting to look away, especially after the line has been presented, but try to stay looking at the dot. (2) Do your best to pay attention to all 8 images during the first presentation! Press space to start the practice. '
+  }
+
+  ///possibly not needed 
   jsPsych.init({
-    timeline: [preload_images, intro_1, intro_2, intro_3],
+    timeline: [preload_images, intro_1, intro_2, gender, age, intro_5, intro_6, intro_7, intro_dot, intro_8, intro_dot, intro_dot2, intro_9, intro_10, intro_11, intro_12, intro_13, trial_14],
 
   });
+  ///fixation dot that occurs before apperance of prechange trial 
   var pre_trial = {
       fixation_image: 'img/blue.png',
       trial_duration: 1000,
       choices: jsPsych.NO_KEYS    
   }
+  ///mediocre way of randomizing the images
   var yo = ['img/003.png', 'img/006.png', 'img/014.png', 'img/015.png', 'img/022.png','img/028.png','img/030.png', 'img/033.png','img/036.png', 'img/039.png','img/040.png','img/041.png','img/047.png', 'img/048.png', 'img/054.png', 'img/055.png', 'img/060.png','img/061.png','img/063.png', 'img/067.png','img/069.png', 'img/074.png','img/078.png','img/084.png']
   var yoyo = jsPsych.randomization.repeat(yo, 1);
   var yoyo2 =  jsPsych.randomization.repeat(yoyo, 1);
   var pics = [
     {v1: yoyo},
 ];
-
+//randomizing grayscale images
 var gyo = ['gimg/003.png', 'gimg/006.png', 'gimg/014.png', 'gimg/015.png', 'gimg/022.png','gimg/028.png','gimg/030.png', 'gimg/033.png','gimg/036.png', 'gimg/039.png','gimg/040.png','gimg/041.png','gimg/047.png', 'gimg/048.png', 'gimg/054.png', 'gimg/055.png', 'gimg/060.png','gimg/061.png','gimg/063.png', 'gimg/067.png','gimg/069.png', 'gimg/074.png','gimg/078.png','gimg/084.png']
   var gyoyo = jsPsych.randomization.repeat(gyo, 1);
   var gyoyo2 =  jsPsych.randomization.repeat(gyoyo, 1);
@@ -85,7 +179,7 @@ var gyo = ['gimg/003.png', 'gimg/006.png', 'gimg/014.png', 'gimg/015.png', 'gimg
 
 
 
-
+//ODD "trial_# variables are the prechange trials"
   var trial_1 = {
     timeline_variables: pics,
     target_present: true,
@@ -94,6 +188,7 @@ var gyo = ['gimg/003.png', 'gimg/006.png', 'gimg/014.png', 'gimg/015.png', 'gimg
     choices: jsPsych.NO_KEYS
   }
 
+  //EVEN "trial_# variables are the post change trials"
   var trial_2 = {
     timeline_variables: pics,
     target_present: false,
@@ -103,6 +198,8 @@ var gyo = ['gimg/003.png', 'gimg/006.png', 'gimg/014.png', 'gimg/015.png', 'gimg
     fixation_duration: 2000,
     trial_duration: 2000
   }
+  //"display#" are the identification displays 
+  //only occur within change trials 
   var display1 = {
     type: "html-keyboard-response",
     stimulus: `
@@ -121,14 +218,15 @@ var gyo = ['gimg/003.png', 'gimg/006.png', 'gimg/014.png', 'gimg/015.png', 'gimg
     correct_response: '4'
   }
 
-var noise = {
+//"Noise#" variablesdiscription of noise that will occur with right awnswer"
+var noise1 = {
     type: "audio-keyboard-response",
     stimulus: 'sound/speech_green.mp3',
     trial_duration: 250
 }
-
-  var if_noise = {
-    timeline: [noise],
+//"if_noise#" variables are the function determining when noise will occur 
+  var if_noise1 = {
+    timeline: [noise1],
     conditional_function: function(){
       var data = jsPsych.data.get().last(1).values()[0];
       if(jsPsych.pluginAPI.compareKeys(data.response, '4')){
@@ -139,15 +237,17 @@ var noise = {
     }
   }
 
+//"trials#" variables are the baseline for the description of a full trial of the visual search circle, This trial is composed of trial_1 to if_noise above
+//this trial represents a iconic memory CHANGE trial
   var trials1 = {
     timeline_variables: pics,
     type: 'visual-search-circle',
-    target: jsPsych.randomization.sampleWithoutReplacement(yoyo, 1),
-    foil: jsPsych.randomization.sampleWithoutReplacement(yoyo, 8),
+    target: jsPsych.randomization.sampleWithoutReplacement(yoyo, 1), //one random target picket from set of pictures
+    foil: jsPsych.randomization.sampleWithoutReplacement(yoyo, 8), //eight random distractors are picked out, one will be replaced by the target in trial_2
     randomize_order: true,
     fixation_image: 'img/red dot.png',
     fixation_duration: 0,
-    timeline: [pre_trial, trial_1, trial_2, display1, if_noise],
+    timeline: [pre_trial, trial_1, trial_2, display1, if_noise1], //"trials1" represents the timeline of these 5 combined making up a whole trial 
   }
 
     var trial_3 = {
@@ -205,6 +305,7 @@ var noise = {
     }
   }
 
+  //this trial represents a fragile VSTM CHANGE trial
   var trials2 = {
     timeline_variables: pics,
     type: 'visual-search-circle',
@@ -269,6 +370,7 @@ var noise = {
     }
   }
 
+//this trial represents a working memory CHANGE trial
   var trials3 = {
     timeline_variables: pics,
     type: 'visual-search-circle',
@@ -299,7 +401,7 @@ var noise = {
     trial_duration: 2000
   }
   
-
+//this trial represents a iconic memory NO CHANGE trial
   var trials4 = {
     timeline_variables: pics,
     type: 'visual-search-circle',
@@ -330,7 +432,7 @@ var noise = {
     trial_duration: 2000
   } 
 
-
+//this trial represents a fragile VSTM NO CHANGE trial
   var trials5 = {
     timeline_variables: pics,
     type: 'visual-search-circle',
@@ -360,7 +462,7 @@ var noise = {
   }
 
 
-  
+  //this trial represents a working memory NO CHANGE trial
   var trials6 = {
     timeline_variables: pics,
     type: 'visual-search-circle',
@@ -425,7 +527,7 @@ var noise4 = {
       }
     }
   }
-
+//this trial represents an iconic memory CHANGE trial w/ GRAYSCALE pics
   var trials7 = {
     timeline_variables: gpics,
     type: 'visual-search-circle',
@@ -491,7 +593,7 @@ var noise4 = {
       }
     }
   }
-
+//this trial represents a fragile VSTM CHANGE trial w/ GRAYSCALE pics
   var trials8 = {
     timeline_variables: gpics,
     type: 'visual-search-circle',
@@ -555,7 +657,7 @@ var noise4 = {
       }
     }
   }
-
+//this trial represents an working memory CHANGE trial w/ GRAYSCALE pics
   var trials9 = {
     timeline_variables: gpics,
     type: 'visual-search-circle',
@@ -586,7 +688,7 @@ var noise4 = {
     trial_duration: 2000
   }
   
-
+//this trial represents an iconic memory NO CHANGE trial w/ GRAYSCALE pics
   var trials10 = {
     timeline_variables: gpics,
     type: 'visual-search-circle',
@@ -617,7 +719,7 @@ var noise4 = {
     trial_duration: 2000
   } 
 
-
+//this trial represents an fragile VSTM NO CHANGE trial w/ GRAYSCALE pics
   var trials11 = {
     timeline_variables: gpics,
     type: 'visual-search-circle',
@@ -647,7 +749,7 @@ var noise4 = {
   }
 
 
-  
+  //this trial represents a working memory NO CHANGE trial w/ GRAYSCALE pics
   var trials12 = {
     timeline_variables: gpics,
     type: 'visual-search-circle',
@@ -660,7 +762,7 @@ var noise4 = {
     
   }
 
-
+//randomizing trials
 var myArray = [trials1, trials2, trials3, trials4, trials5, trials6, trials7, trials7, trials8, trials9, trials10, trials11, trials12];
 var shuffledArray = jsPsych.randomization.repeat(myArray, 3);
 
@@ -669,9 +771,9 @@ var shuffledArray = jsPsych.randomization.repeat(myArray, 3);
 
     }
 
-    
+    //final timeline//
 jsPsych.init({
-    timeline: [preload_images, intro_1, intro_2, intro_3, trials],
+    timeline: [preload_images, intro_1, intro_2, gender, age, intro_5, intro_6, intro_7, intro_dot, intro_8, intro_dot, intro_dot2, intro_9, intro_10, intro_11, intro_12, intro_13, intro_14, trials],
     on_finish: function() {
       jsPsych.data.displayData();
     }
