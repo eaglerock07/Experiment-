@@ -1,37 +1,198 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>My experiment</title>
-        <script src="jspsych-6.3.1/jspsych.js"></script>
-        <script src="jspsych-6.3.1/plugins/jspsych-html-keyboard-response.js"></script>
-        <link href="jspsych-6.3.1/css/jspsych.css" rel="stylesheet" type="text/css">
-    </head>
-    <body></body>
-    <script>
+/**
+ *
+ * jspsych-visual-search-circle
+ * Josh de Leeuw
+ *
+ * display a set of objects, with or without a target, equidistant from fixation
+ * subject responds to whether or not the target is present
+ *
+ * based on code written for psychtoolbox by Ben Motz
+ *
+ * requires Snap.svg library (snapsvg.io)
+ *
+ * documentation: docs.jspsych.org
+ *
+ **/
 
-    var timeline = [];
+jsPsych.plugins["fixation-stim-6.3"] = (function() {
+  
+  var plugin = {};
 
-  var trial_1 = {
-      type: 'html-keyboard-response',
-      stimulus: 'Thank you for participating. You will be shown 8 items in a circle around a center point. Attempt to memorize the items as they appear. A short time later, you will determine whether or not a specific cued item was changed from the group. If the item was changed, you will determine which item appeared before the change. Press any key to continue.'
+  plugin.info = {
+    name: 'fixation-stim-6.3',
+    description: '',
+    parameters: {
+      cont_key: {
+        type: jsPsych.plugins.parameterType.KEY,
+        pretty_name: 'cont_key',
+        default: 'f',
+        description: 'The HTML string to be displayed'
+      },
+      fixation_size: {
+        type: jsPsych.plugins.parameterType.INT,
+        pretty_name: 'fixation_size',
+        default: undefined,
+        description: 'The HTML string to be displayed'
+      },
+      fixation_image: {
+        type: jsPsych.plugins.parameterType.IMAGE,
+        pretty_name: 'fixation_image',
+        default: undefined,
+        description: 'The keys the subject is allowed to press to respond to the stimulus.'
+      },
+      circle_diameter: {
+        type: jsPsych.plugins.parameterType.INT,
+        pretty_name: 'circle_diameter',
+        default: 250,
+        description: 'Any content here will be displayed below the stimulus.'
+      },
+      target_size: {
+        type: jsPsych.plugins.parameterType.INT,
+        pretty_name: 'target_size',
+        default: 50,
+        description: 'How long to hide the stimulus.'
+      },
+      timing_fixation: {
+        type: jsPsych.plugins.parameterType.INT,
+        pretty_name: 'timing_fixation',
+        default: 1000,
+        description: 'How long to show trial before it ends.'
+      },
+      display_element: {
+        type: jsPsych.plugins.parameterType.IMAGE,
+        pretty_name: 'display_element',
+        default: undefined,
+        description: 'If true, trial will end when subject makes a response.'
+      },
+      timing_post_trial: {
+        type:  jsPsych.plugins.parameterType.INT,
+        pretty_name:'timing_post_trial',
+        default: 1000,
+        description:  'How long trial will proceed after it has ended'
+      }
+    }      
   }
-  timeline.push(trial_1);
 
-  var trial_2 = {
-      type: 'html-keyboard-response',
-      stimulus: 'Once you see the second appearance of the 8 items. Determine whether or not the cued item was changed. Use "F" for CHANGE. Use "J" for NO CHANGE. Press any key to continue'
-  }
-  timeline.push(trial_2);
+ 
+      
+  plugin.trial = function(display_element, trial) {
+  
+    trial = jsPsych.data.get(trial);
+        
+    // screen information
+    var screenw = display_element.width;
+    var screenh = display_element.width;
+    var centerx = screenw / 2;
+    var centery = screenh / 2;
+  
+    // circle params
+    var diam = trial.circle_diameter; // pixels
+    var paper_size = diam;
+        
+    // stimuli width, height
+    var stimh = trial.target_size;
+    var stimw = trial.target_size;
+    var hstimh = stimh / 2;
+    var hstimw = stimw / 2;
+  
+    var fix_loc = [Math.floor(paper_size / 2 - trial.fixation_size / 2), Math.floor(paper_size / 2 - trial.fixation_size / 2)];
 
-  var trial_3 = {
-      type: 'html-keyboard-response',
-      stimulus: 'If the trial that occured had a changed item, you will then be asked to determine which item appeared before the change out of four choices. Use the "1" "2" "3" and "4" keys to make your decision. Press any key to continue'
-  }
-  timeline.push(trial_3);
+    // possible stimulus locations on the circle
+    var display_locs = [];
+    var possible_display_locs = trial.set_size;
+    var random_offset = Math.floor(Math.random() * 360);
+    for (var i = 0; i < possible_display_locs; i++) {
+      display_locs.push([
+        Math.floor(paper_size / 2 + (cosd(random_offset + (i * (360 / possible_display_locs))) * radi) - hstimw),
+        Math.floor(paper_size / 2 - (sind(random_offset + (i * (360 / possible_display_locs))) * radi) - hstimh)
+      ]);
+    }
 
-    jsPsych.init({
-        timeline: timeline
-    });
+  
+    // get target to draw on
+    display_element.innerHTML += '<div id="jspsych-visual-search-circle-container" style="position: relative; width:' + paper_size + 'px; height:' + paper_size + 'px"></div>';
+    var paper = display_element.querySelector("#jspsych-visual-search-circle-container");
+  
+  show_cue();
+        
+    function show_cue(centerx, centery) {
+            
+    
+  
+    
+    
+      
+      //Brian: Adding 3 here to make it line up with the changes to circle-stim.
+        
+      var trial_over = false;
+  
+      var after_response = function(info) {
+  
+        trial_over = true;
+  
+        clear_display();
+  
+        end_trial(info.rt, info.key);
+  
+      }
+  
+      var valid_keys = [trial.cont_key];
+  
+      key_listener = jsPsych.pluginAPI.getKeyboardResponse({
+        callback_function: after_response,
+        valid_responses: valid_keys,
+        rt_method: 'performance',
+        persist: false,
+        allow_held_key: false
+      });
+  
+      if (trial.trial_duration !== null) {
 
-    </script>
-</html>
+        jsPsych.pluginAPI.setTimeout(function() {
+
+          if (!trial_over) {
+
+            jsPsych.pluginAPI.cancelKeyboardResponse(key_listener);
+
+            trial_over = true;
+
+            var rt = null;
+            var key_press = null;
+
+            clear_display();
+
+            end_trial(rt, key_press);
+          }
+        }, trial.trial_duration);
+
+      }
+
+      function clear_display() {
+        display_element.innerHTML = '';
+      }
+    }
+  
+    function end_trial(rt, key_press) {
+  
+      // data saving
+      var trial_data = {
+        rt: rt,
+        response: key_press,
+        locations: display_locs,
+        display_element:display_element,
+        target_present: trial.target_present,
+        set_size: trial.set_size
+      };
+  
+      // this line merges together the trial_data object and the generic
+      // data object (trial.data), and then stores them.
+     
+  
+      // go to next trial
+      jsPsych.finishTrial(trial_data);
+    }
+  };
+
+  
+  return plugin;
+})();
